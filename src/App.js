@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-scroll'; // For smooth scrolling
 import { motion } from 'framer-motion'; // For animations
 // Import icons for socials
@@ -10,12 +10,11 @@ import { FaDiscord, FaTelegram, FaTwitter } from 'react-icons/fa';
 
 const globalStyles = `
 :root {
-  /* A more professional, "human" color palette */
-  --bg-dark: #111827;      /* Deep navy blue */
-  --bg-light: #1f2937;     /* Lighter navy */
-  --primary-color: #38bdf8; /* A friendly, bright blue */
-  --text-primary: #f8fafc;   /* Soft white */
-  --text-secondary: #cbd5e1; /* Light gray */
+  --bg-dark: #111827;
+  --bg-light: #1f2937;
+  --primary-color: #38bdf8;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
   --shadow: rgba(0, 0, 0, 0.4);
 }
 
@@ -31,17 +30,12 @@ html {
   background-color: var(--bg-dark);
   color: var(--text-primary);
   scroll-behavior: smooth;
-  
-  /* BACKGROUND IMAGE: 
-    This is where you'd add your background image. 
-    I've added a clean gradient as a placeholder.
-  */
   background-image: linear-gradient(135deg, var(--bg-dark) 0%, #111827 100%);
   background-attachment: fixed;
 }
 
 body {
-  line-height: 1.7; /* More spacing for readability */
+  line-height: 1.7;
 }
 
 .App {
@@ -78,7 +72,7 @@ h2 {
   left: 50%;
   transform: translateX(-50%);
   max-width: 1100px;
-  background-color: rgba(17, 24, 39, 0.8); /* Semi-transparent navy */
+  background-color: rgba(17, 24, 39, 0.8);
   backdrop-filter: blur(10px);
   z-index: 100;
   padding: 1.5rem 2rem;
@@ -107,7 +101,6 @@ h2 {
   font-weight: 500;
   margin-left: 2rem;
   padding-bottom: 5px;
-  position: relative;
   transition: color 0.3s ease;
   cursor: pointer;
 }
@@ -120,7 +113,7 @@ h2 {
   color: var(--primary-color);
 }
 
-/* --- Hero (Bio) Styles --- */
+/* --- Hero --- */
 .hero {
   display: flex;
   flex-direction: column;
@@ -131,7 +124,7 @@ h2 {
 }
 
 .hero-title {
-  font-size: 3.5rem; /* Slightly smaller for a softer feel */
+  font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
 }
@@ -143,7 +136,6 @@ h2 {
 .hero-subtitle {
   font-size: 1.8rem;
   color: var(--text-secondary);
-  font-weight: 400;
   margin-bottom: 1.5rem;
 }
 
@@ -152,7 +144,6 @@ h2 {
   color: var(--text-secondary);
   margin-bottom: 2.5rem;
   max-width: 650px;
-  font-weight: 400;
 }
 
 .hero-cta-button {
@@ -161,7 +152,7 @@ h2 {
   font-size: 1.1rem;
   font-weight: bold;
   padding: 0.8rem 2.5rem;
-  border-radius: 50px; /* Rounded for a friendly feel */
+  border-radius: 50px;
   text-decoration: none;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -174,7 +165,7 @@ h2 {
   box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
 }
 
-/* --- Services ("What I Do") Styles --- */
+/* --- Services --- */
 .services-section {
   display: flex;
   flex-direction: column;
@@ -213,7 +204,7 @@ h2 {
   color: var(--text-secondary);
 }
 
-/* --- Projects ("Who I've Worked With") Styles --- */
+/* --- Projects --- */
 .projects-section {
   display: flex;
   flex-direction: column;
@@ -223,10 +214,10 @@ h2 {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: 1fr; /* Single column list */
+  grid-template-columns: 1fr;
   gap: 2rem;
   width: 100%;
-  max-width: 800px; /* Constrain width for a list feel */
+  max-width: 800px;
 }
 
 .project-card {
@@ -237,6 +228,7 @@ h2 {
   flex-direction: column;
   transition: all 0.3s ease-in-out;
   box-shadow: 0 4px 10px var(--shadow);
+  position: relative;
 }
 
 .project-card:hover {
@@ -265,22 +257,24 @@ h2 {
   flex-grow: 1;
 }
 
-.project-card-link {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s;
-}
-.project-card-link:hover {
-  color: var(--text-primary);
+.project-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
 }
 
-/* --- Footer (Socials) Styles --- */
+/* --- Footer --- */
 .footer {
   text-align: center;
   padding: 4rem 0 2rem 0;
   border-top: 1px solid var(--bg-light);
-  min-height: auto; /* Override section min-height */
+  min-height: auto;
 }
 
 .socials-list {
@@ -293,7 +287,7 @@ h2 {
 
 .social-link {
   color: var(--text-secondary);
-  font-size: 2rem; /* Make icons large and easy to click */
+  font-size: 2rem;
   transition: all 0.3s ease;
 }
 
@@ -306,23 +300,315 @@ h2 {
   color: var(--text-secondary);
   font-size: 0.9rem;
 }
-.project-logo {
-width: 60px;
-height: 60px;
-border-radius: 50%;      /* ✅ makes it circular */
-object-fit: cover;
-position: absolute;       /* ✅ places it in the card corner */
-top: 15px;
-right: 15px;
-border: 2px solid var(--primary-color);
-box-shadow: 0 0 8px rgba(0,0,0,0.3);
+
+/* --- 📱 RESPONSIVE STYLES --- */
+@media (max-width: 768px) {
+  .App {
+    padding: 0 1rem;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .navbar-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .navbar-link {
+    margin: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+
+  section {
+    padding: 4rem 0;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.4rem;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .hero-cta-button {
+    font-size: 1rem;
+    padding: 0.7rem 2rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card {
+    padding: 1.5rem;
+  }
+
+  .project-card-title {
+    font-size: 1.4rem;
+  }
+
+  .project-card-role {
+    font-size: 1rem;
+  }
+
+  .socials-list {
+    gap: 1.2rem;
+  }
+
+  .social-link {
+    font-size: 1.5rem;
+  }
 }
 
-`;
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.8rem;
+  }
 
-// --- 2. YOUR DATA ---
-// Edit all your info here
-// ===================================
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+  }
+
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .navbar-link {
+    font-size: 0.9rem;
+    margin: 0.3rem;
+  }
+
+  .service-card {
+    padding: 1.2rem;
+  }
+
+  .footer {
+    padding: 2rem 1rem;
+  }
+
+  .footer-text {
+    font-size: 0.8rem;
+  }
+}
+  /* --- Simplified Mobile Styles --- */
+@media (max-width: 768px) {
+  html, body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  .App {
+    padding: 0 1rem;
+  }
+
+  section {
+    padding: 3rem 0;
+    min-height: auto;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.8rem 1rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .navbar-links {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.3rem;
+  }
+
+  .navbar-link {
+    font-size: 0.9rem;
+    margin: 0.3rem 0.8rem;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-description {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    max-width: 90%;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-cta-button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+  }
+
+  .services-grid,
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .service-card,
+  .project-card {
+    padding: 1.2rem;
+    border-radius: 8px;
+  }
+
+  .service-card-title,
+  .project-card-title {
+    font-size: 1.1rem;
+  }
+
+  .project-card-role {
+    font-size: 0.9rem;
+  }
+
+  .project-card-description {
+    font-size: 0.85rem;
+  }
+
+  .footer {
+    padding: 2rem 0 1rem 0;
+  }
+
+  .socials-list {
+    gap: 1rem;
+  }
+
+  .social-link {
+    font-size: 1.4rem;
+  }
+
+  .footer-text {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .hero-description {
+    font-size: 0.85rem;
+  }
+
+  .navbar-link {
+    font-size: 0.8rem;
+  }
+
+  .service-card-title,
+  .project-card-title {
+    font-size: 1rem;
+  }
+
+  .project-card-description {
+    font-size: 0.8rem;
+  }
+}
+  /* --- Mobile Navbar Styles --- */
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.menu-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile menu hidden by default */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+  }
+
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgba(17, 24, 39, 0.95);
+    position: absolute;
+    top: 60px;
+    left: 0;
+    padding: 1rem 0;
+    text-align: center;
+    border-top: 1px solid var(--primary-color);
+    animation: slideDown 0.3s ease forwards;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .navbar-link {
+    margin: 0.8rem 0;
+    font-size: 1rem;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+`;
 
 const bio = {
   name: 'The Rock', // Add your name
@@ -414,8 +700,13 @@ const socials = {
 // All components are defined here
 // ===================================
 
-// --- Navbar Component ---
+
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <nav className="navbar">
       <Link
@@ -425,19 +716,27 @@ const Navbar = () => {
         offset={-70}
         duration={500}
         className="navbar-brand"
+        onClick={closeMenu}
       >
         The Rock<span></span>
       </Link>
-      <ul className="navbar-links">
+
+      {/* Hamburger Button */}
+      <div className="menu-toggle" onClick={toggleMenu}>
+        {menuOpen ? '✕' : '☰'}
+      </div>
+
+      {/* Nav Links */}
+      <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
         <li>
           <Link
             to="home"
-            spy={true}
             smooth={true}
             offset={-70}
             duration={500}
             className="navbar-link"
             activeClass="active"
+            onClick={closeMenu}
           >
             Bio
           </Link>
@@ -445,12 +744,12 @@ const Navbar = () => {
         <li>
           <Link
             to="services"
-            spy={true}
             smooth={true}
             offset={-70}
             duration={500}
             className="navbar-link"
             activeClass="active"
+            onClick={closeMenu}
           >
             What I Do
           </Link>
@@ -458,12 +757,12 @@ const Navbar = () => {
         <li>
           <Link
             to="projects"
-            spy={true}
             smooth={true}
             offset={-70}
             duration={500}
             className="navbar-link"
             activeClass="active"
+            onClick={closeMenu}
           >
             Projects
           </Link>
@@ -471,12 +770,12 @@ const Navbar = () => {
         <li>
           <Link
             to="contact"
-            spy={true}
             smooth={true}
             offset={-70}
             duration={500}
             className="navbar-link"
             activeClass="active"
+            onClick={closeMenu}
           >
             Contact
           </Link>
@@ -485,6 +784,8 @@ const Navbar = () => {
     </nav>
   );
 };
+
+
 
 // --- Hero (Bio) Component ---
 const Hero = () => {
@@ -658,9 +959,9 @@ function App() {
 
       <Navbar />
       <main>
-        <section id="home">
-          <Hero />
-        </section>
+        <section id="home" style={{ paddingTop: '100px' }}>
+        <Hero />
+      </section>
         <section id="services">
           <Services />
         </section>
